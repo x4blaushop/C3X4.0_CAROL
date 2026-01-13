@@ -1,1 +1,225 @@
+/* ARQUITETO: JOSÉ PATRICK CASTRO SOARES
+   SISTEMA: C3X4.0 | CÉLULA: CAROL
+   LOG: ESTILO SOBERANO - IMPACTO VISUAL
+*/
+
+/* 1. VARIÁVEIS DO DNA (Núcleo Configurável) */
+:root {
+    --cor-fundo: #0a0a0a;             /* Fundo escuro profundo */
+    --cor-painel: #1c1c1c;            /* Fundo dos cards e elementos */
+    --cor-destaque: #d4af37;          /* Ouro Soberano (Primária) */
+    --cor-secundaria: #00ced1;        /* Ciano (para detalhes sutis) */
+    --cor-texto: #e0e0e0;             /* Texto claro */
+    --borda-fina: 1px solid rgba(255, 255, 255, 0.05); /* Borda sutil */
+    --sombra-card: 0 10px 30px rgba(0,0,0,0.4); /* Profundidade */
+    --sombra-hover: 0 15px 40px rgba(212, 175, 55, 0.2); /* Brilho no hover */
+}
+
+/* 2. BASE DO CORPO (A Habitação) */
+body {
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    font-family: 'Inter', sans-serif; /* Fonte moderna e limpa */
+    margin: 0; padding: 0;
+    display: flex; /* Flexbox para centralização */
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh; /* Ocupa toda a tela */
+    overflow-x: hidden; /* Evita scroll lateral */
+    transition: background-color 0.5s ease; /* Transição suave de fundo */
+}
+
+/* 3. BARRA DO ARQUITETO (O Logbook Superior) */
+.barra-arquiteto {
+    background: linear-gradient(to right, #000, rgba(212, 175, 55, 0.1), #000);
+    padding: 12px 20px;
+    font-size: 10px;
+    text-align: center;
+    letter-spacing: 3px;
+    color: rgba(255, 255, 255, 0.3);
+    border-bottom: var(--borda-fina);
+    width: 100%;
+    text-transform: uppercase;
+    animation: fadeInDown 0.8s ease-out; /* Animação de entrada */
+}
+
+/* 4. CONTAINER PRINCIPAL (A Zona de Operação) */
+.container {
+    width: 90%;
+    max-width: 600px;
+    padding: 30px 0;
+    margin: 40px auto;
+    animation: fadeInUp 0.8s ease-out; /* Animação de entrada */
+}
+
+/* 5. PAINEL DE PERSONALIZAÇÃO (A Reforma da Habitação) */
+.reforma-casa {
+    background: var(--cor-painel);
+    border: var(--borda-fina);
+    padding: 20px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    box-shadow: var(--sombra-card);
+    position: relative;
+    overflow: hidden; /* Para o efeito de brilho */
+    transition: all 0.3s ease;
+}
+
+.reforma-casa::before { /* Efeito de brilho */
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+.reforma-casa:hover::before { opacity: 1; }
+
+.reforma-casa p { margin: 0 0 15px 0; font-size: 13px; color: #aaa; }
+.reforma-casa b { color: var(--cor-destaque); }
+
+.grupo-personalizacao {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; /* Quebra de linha em telas menores */
+    gap: 10px;
+}
+
+.btn-cor { 
+    width: 35px; height: 35px; border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    display: inline-block;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.btn-cor:hover { transform: scale(1.1); border-color: var(--cor-destaque); }
+
+#nomeNegocio {
+    flex: 1;
+    height: 40px;
+    margin: 0;
+    padding: 0 15px;
+    font-size: 1.1em;
+    background: #252525;
+    border-color: #444;
+    color: var(--cor-texto);
+    border-radius: 8px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+#nomeNegocio:focus { border-color: var(--cor-destaque); box-shadow: 0 0 8px rgba(212, 175, 55, 0.5); outline: none; }
+
+/* 6. CARD DE OPERAÇÃO (O Console) */
+.card {
+    background: var(--cor-painel);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: var(--sombra-card);
+    border: var(--borda-fina);
+    transition: all 0.3s ease;
+}
+.card:hover { border-color: var(--cor-destaque); box-shadow: var(--sombra-hover); }
+
+h1#tituloSite {
+    color: var(--cor-destaque);
+    margin: 0 0 10px 0;
+    font-size: 2.2em;
+    text-align: center;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    transition: color 0.3s ease; /* Transição da cor do título */
+}
+
+.card p { opacity: 0.8; text-align: center; margin-bottom: 25px; }
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--cor-destaque);
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    background: #252525;
+    border: 1px solid #444;
+    color: white;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1em;
+    transition: border-color 0.3s ease, background 0.3s ease;
+}
+input:focus, select:focus { border-color: var(--cor-destaque); background: #303030; outline: none; }
+
+.btn-acao {
+    background: var(--cor-destaque);
+    color: #000;
+    border: none;
+    padding: 15px;
+    width: 100%;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1.1em;
+    margin-top: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+.btn-acao:hover { background: #e0b448; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); }
+.btn-acao:active { transform: translateY(0); }
+
+/* 7. MONITOR DE RESULTADOS (O Log da Materialização) */
+.monitor {
+    margin-top: 25px;
+    padding: 20px;
+    background: #000;
+    border-radius: 12px;
+    border-left: 5px solid var(--cor-destaque);
+    animation: fadeIn 0.5s ease-out; /* Animação de entrada */
+}
+
+#resCarol {
+    font-weight: bold;
+    font-size: 1.3em;
+    color: var(--cor-texto); /* Usa a cor do texto padrão */
+}
+#resCarol span { color: var(--cor-destaque); } /* Apenas o valor em destaque */
+
+#resArquiteto {
+    font-size: 0.9em;
+    opacity: 0.7;
+    margin-top: 10px;
+    color: #999;
+}
+
+.instrucao {
+    font-size: 12px;
+    color: #666;
+    margin-top: 20px;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+/* 8. ANIMAÇÕES (A Fluidez do Sistema) */
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
 
