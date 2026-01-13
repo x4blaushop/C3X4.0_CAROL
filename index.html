@@ -1,1 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C3X4.0 | MINHA HABITAÇÃO</title>
+    <style>
+        :root {
+            --cor-fundo: #0a0a0a;
+            --cor-painel: #111111;
+            --cor-destaque: #d4af37;
+            --cor-texto: #ffffff;
+        }
+
+        body {
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            font-family: 'Inter', sans-serif;
+            margin: 0; padding: 0;
+            transition: 0.5s;
+        }
+
+        /* BARRA DE SOBERANIA */
+        .barra-arquiteto {
+            background: #000;
+            padding: 10px;
+            font-size: 11px;
+            text-align: center;
+            border-bottom: 1px solid #222;
+            letter-spacing: 2px;
+            color: #555;
+        }
+
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+
+        /* PAINEL DE PERSONALIZAÇÃO (LIBERDADE) */
+        .reforma-casa {
+            background: var(--cor-painel);
+            border: 1px solid #333;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .btn-cor { 
+            width: 30px; height: 30px; border-radius: 50%; border: 2px solid #fff; 
+            cursor: pointer; margin-right: 10px; display: inline-block;
+        }
+
+        /* CALCULADORA E CONTEÚDO */
+        .card {
+            background: var(--cor-painel);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        h1 { color: var(--cor-destaque); margin: 0 0 10px 0; }
+        
+        input, select {
+            width: 100%; padding: 12px; margin: 10px 0;
+            background: #1a1a1a; border: 1px solid #333;
+            color: #fff; border-radius: 8px; box-sizing: border-box;
+        }
+
+        .btn-acao {
+            background: var(--cor-destaque);
+            color: #000; border: none; padding: 15px;
+            width: 100%; border-radius: 8px; font-weight: bold;
+            cursor: pointer; margin-top: 10px;
+        }
+
+        .monitor {
+            margin-top: 20px; padding: 15px; background: #000;
+            border-radius: 10px; border-left: 4px solid var(--cor-destaque);
+        }
+
+        .instrucao { font-size: 12px; color: #888; margin-top: 15px; text-align: center; }
+    </style>
+</head>
+<body>
+
+<div class="barra-arquiteto">SISTEMA C3X4.0 | ARQUITETO: JOSÉ PATRICK</div>
+
+<div class="container">
+    
+    <div class="reforma-casa">
+        <p style="margin: 0 0 10px 0; font-size: 14px;">🛠️ <b>Personalize sua Habitação:</b></p>
+        <div style="display: flex; align-items: center;">
+            <div class="btn-cor" style="background: #d4af37;" onclick="mudarCor('#d4af37')"></div>
+            <div class="btn-cor" style="background: #ff69b4;" onclick="mudarCor('#ff69b4')"></div>
+            <div class="btn-cor" style="background: #00ced1;" onclick="mudarCor('#00ced1')"></div>
+            <input type="text" id="nomeNegocio" placeholder="Nome do seu negócio..." 
+                   oninput="mudarNome()" style="margin: 0; flex: 1; height: 30px;">
+        </div>
+    </div>
+
+    <div class="card">
+        <h1 id="tituloSite">Meu Negócio</h1>
+        <p style="opacity: 0.7;">Gestão de Independência</p>
+
+        <label>Serviço de Hoje:</label>
+        <select id="servico">
+            <option value="Progressiva">Progressiva</option>
+            <option value="Botox">Botox</option>
+            <option value="Selagem">Selagem</option>
+        </select>
+
+        <label>Valor Cobrado (R$):</label>
+        <input type="number" id="valor" placeholder="Ex: 200">
+
+        <label>Gasto com Material/Viagem (R$):</label>
+        <input type="number" id="custo" placeholder="Ex: 20">
+
+        <button class="btn-acao" onclick="calcular()">MATERIALIZAR LUCRO</button>
+
+        <div id="monitor" class="monitor" style="display: none;">
+            <div id="resCarol" style="font-weight: bold;"></div>
+            <div id="resArquiteto" style="font-size: 12px; opacity: 0.6; margin-top: 5px;"></div>
+        </div>
+
+        <p class="instrucao">Basta ler e preencher. Sua liberdade começa nos dados.</p>
+    </div>
+</div>
+
+<script>
+    function mudarCor(cor) {
+        document.documentElement.style.setProperty('--cor-destaque', cor);
+    }
+
+    function mudarNome() {
+        const nome = document.getElementById('nomeNegocio').value;
+        document.getElementById('tituloSite').innerText = nome || "Meu Negócio";
+    }
+
+    function calcular() {
+        const v = parseFloat(document.getElementById('valor').value);
+        const c = parseFloat(document.getElementById('custo').value) || 0;
+
+        if(!v) return;
+
+        const sustento = v * 0.005; // 0.50% Arquiteto
+        const lucro = v - c - sustento;
+
+        document.getElementById('monitor').style.display = 'block';
+        document.getElementById('resCarol').innerText = `Seu Lucro Real: R$ ${lucro.toFixed(2)}`;
+        document.getElementById('resArquiteto').innerText = `Sustentabilidade do Sistema: R$ ${sustento.toFixed(2)}`;
+        
+        console.log("Log C3X4.0: Sincronizando 0.50% para o Arquiteto.");
+    }
+</script>
+
+</body>
+</html>
 
