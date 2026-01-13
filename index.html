@@ -3,153 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C3X4.0 | MINHA HABITAÇÃO</title>
+    <title>C3X4.0 | MINHA CÉLULA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --cor-fundo: #0a0a0a;
-            --cor-painel: #111111;
-            --cor-destaque: #d4af37;
-            --cor-texto: #ffffff;
+            --primary: #d4af37;
+            --bg: #050505;
+            --card-bg: rgba(20, 20, 20, 0.8);
+            --font-main: 'Montserrat', sans-serif;
+            --font-title: 'Syncopate', sans-serif;
         }
 
         body {
-            background-color: var(--cor-fundo);
-            color: var(--cor-texto);
-            font-family: 'Inter', sans-serif;
-            margin: 0; padding: 0;
-            transition: 0.5s;
+            background: var(--bg);
+            color: #fff;
+            font-family: var(--font-main);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* BARRA DE SOBERANIA */
-        .barra-arquiteto {
-            background: #000;
-            padding: 10px;
-            font-size: 11px;
-            text-align: center;
-            border-bottom: 1px solid #222;
-            letter-spacing: 2px;
-            color: #555;
+        /* EFEITO DE LUZ DE FUNDO QUE MUDA COM A COR */
+        .glow-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% -20%, var(--primary), transparent 60%);
+            opacity: 0.15; pointer-events: none; z-index: -1;
         }
 
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-
-        /* PAINEL DE PERSONALIZAÇÃO (LIBERDADE) */
-        .reforma-casa {
-            background: var(--cor-painel);
-            border: 1px solid #333;
-            padding: 15px;
-            border-radius: 15px;
-            margin-bottom: 20px;
+        .header {
+            padding: 20px; text-align: center; font-size: 9px;
+            letter-spacing: 4px; color: var(--primary); opacity: 0.6;
+            text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        .btn-cor { 
-            width: 30px; height: 30px; border-radius: 50%; border: 2px solid #fff; 
-            cursor: pointer; margin-right: 10px; display: inline-block;
+        .container { width: 90%; max-width: 450px; margin: 30px auto; }
+
+        /* PAINEL DE IDENTIDADE (A CARA DA CAROL) */
+        .identity-panel {
+            background: var(--card-bg);
+            border-radius: 25px; padding: 20px; margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(15px);
         }
 
-        /* CALCULADORA E CONTEÚDO */
-        .card {
-            background: var(--cor-painel);
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        .identity-panel h3 { font-size: 11px; margin-bottom: 15px; color: var(--primary); letter-spacing: 1px; }
+
+        .config-row { display: flex; gap: 10px; align-items: center; margin-bottom: 15px; }
+
+        .color-opt { width: 35px; height: 35px; border-radius: 12px; cursor: pointer; border: 2px solid transparent; transition: 0.3s; }
+        .color-opt:hover { transform: translateY(-3px); border-color: #fff; }
+
+        .font-opt { 
+            flex: 1; padding: 8px; background: #222; border: 1px solid #333; 
+            color: #fff; border-radius: 8px; font-size: 10px; cursor: pointer;
         }
 
-        h1 { color: var(--cor-destaque); margin: 0 0 10px 0; }
-        
+        /* CARD PRINCIPAL */
+        .main-card {
+            background: var(--card-bg);
+            border-radius: 35px; padding: 40px 30px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative; overflow: hidden;
+        }
+
+        #display-name {
+            font-family: var(--font-title); font-size: 2rem;
+            text-align: center; margin-bottom: 5px; color: var(--primary);
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .input-group { margin-top: 25px; }
+        label { font-size: 10px; text-transform: uppercase; color: #666; letter-spacing: 1px; display: block; margin-bottom: 8px; }
+
         input, select {
-            width: 100%; padding: 12px; margin: 10px 0;
-            background: #1a1a1a; border: 1px solid #333;
-            color: #fff; border-radius: 8px; box-sizing: border-box;
+            width: 100%; background: rgba(255,255,255,0.03);
+            border: 1px solid #333; padding: 15px; border-radius: 15px;
+            color: #fff; font-size: 16px; transition: 0.3s;
         }
 
-        .btn-acao {
-            background: var(--cor-destaque);
-            color: #000; border: none; padding: 15px;
-            width: 100%; border-radius: 8px; font-weight: bold;
-            cursor: pointer; margin-top: 10px;
+        input:focus { border-color: var(--primary); outline: none; background: rgba(255,255,255,0.07); }
+
+        .btn-exe {
+            width: 100%; padding: 20px; border-radius: 15px; border: none;
+            background: var(--primary); color: #000; font-weight: 800;
+            font-size: 14px; cursor: pointer; margin-top: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3); transition: 0.3s;
+            text-transform: uppercase; letter-spacing: 2px;
         }
 
-        .monitor {
-            margin-top: 20px; padding: 15px; background: #000;
-            border-radius: 10px; border-left: 4px solid var(--cor-destaque);
+        .btn-exe:hover { transform: scale(1.02); filter: brightness(1.1); }
+
+        #console-output {
+            margin-top: 25px; padding: 20px; background: #000; border-radius: 15px;
+            display: none; border-left: 4px solid var(--primary);
         }
 
-        .instrucao { font-size: 12px; color: #888; margin-top: 15px; text-align: center; }
+        .footer { text-align: center; padding: 40px; font-size: 10px; color: #333; letter-spacing: 2px; }
     </style>
 </head>
 <body>
 
-<div class="barra-arquiteto">SISTEMA C3X4.0 | ARQUITETO: JOSÉ PATRICK</div>
+    <div class="glow-bg" id="glow"></div>
+    <div class="header">C3X4.0 | ARQUITETO JOSÉ PATRICK</div>
 
-<div class="container">
-    
-    <div class="reforma-casa">
-        <p style="margin: 0 0 10px 0; font-size: 14px;">🛠️ <b>Personalize sua Habitação:</b></p>
-        <div style="display: flex; align-items: center;">
-            <div class="btn-cor" style="background: #d4af37;" onclick="mudarCor('#d4af37')"></div>
-            <div class="btn-cor" style="background: #ff69b4;" onclick="mudarCor('#ff69b4')"></div>
-            <div class="btn-cor" style="background: #00ced1;" onclick="mudarCor('#00ced1')"></div>
-            <input type="text" id="nomeNegocio" placeholder="Nome do seu negócio..." 
-                   oninput="mudarNome()" style="margin: 0; flex: 1; height: 30px;">
+    <div class="container">
+        <div class="identity-panel">
+            <h3>REFORMA DA HABITAÇÃO</h3>
+            <div class="config-row">
+                <div class="color-opt" style="background: #d4af37;" onclick="updateStyle('#d4af37')"></div>
+                <div class="color-opt" style="background: #ff75a0;" onclick="updateStyle('#ff75a0')"></div>
+                <div class="color-opt" style="background: #00f2ff;" onclick="updateStyle('#00f2ff')"></div>
+                <div class="color-opt" style="background: #a29bfe;" onclick="updateStyle('#a29bfe')"></div>
+            </div>
+            <div class="config-row">
+                <input type="text" id="name-in" placeholder="Nome da sua Marca..." oninput="updateBrand()">
+            </div>
+            <div class="config-row">
+                <select class="font-opt" onchange="updateFont(this.value)">
+                    <option value="'Syncopate', sans-serif">FONTE: TECNOLÓGICA</option>
+                    <option value="'Playfair Display', serif">FONTE: LUXO CLASSICO</option>
+                    <option value="'Montserrat', sans-serif">FONTE: MODERNA</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="main-card">
+            <h1 id="display-name">CAROL BEAUTY</h1>
+            
+            <div class="input-group">
+                <label>O que vamos fazer hoje?</label>
+                <select id="servico">
+                    <option value="Progressiva">Progressiva Diamond</option>
+                    <option value="Botox">Botox Platinum</option>
+                    <option value="Selagem">Selagem Orgânica</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Valor do Atendimento (R$)</label>
+                <input type="number" id="valor" placeholder="0,00">
+            </div>
+
+            <button class="btn-exe" onclick="materializar()">MATERIALIZAR LUCRO</button>
+
+            <div id="console-output">
+                <div style="font-size: 10px; color: var(--primary); margin-bottom: 5px;">Sincronizado com o Arquiteto</div>
+                <div id="res-carol" style="font-size: 1.5rem; font-weight: bold;"></div>
+            </div>
         </div>
     </div>
 
-    <div class="card">
-        <h1 id="tituloSite">Meu Negócio</h1>
-        <p style="opacity: 0.7;">Gestão de Independência</p>
+    <div class="footer">DNA 2026 | SOBERANIA E LIBERDADE</div>
 
-        <label>Serviço de Hoje:</label>
-        <select id="servico">
-            <option value="Progressiva">Progressiva</option>
-            <option value="Botox">Botox</option>
-            <option value="Selagem">Selagem</option>
-        </select>
+    <script>
+        function updateStyle(color) {
+            document.documentElement.style.setProperty('--primary', color);
+            localStorage.setItem('c3x4_color', color);
+        }
 
-        <label>Valor Cobrado (R$):</label>
-        <input type="number" id="valor" placeholder="Ex: 200">
+        function updateBrand() {
+            const name = document.getElementById('name-in').value;
+            document.getElementById('display-name').innerText = name.toUpperCase() || "SUA MARCA";
+            localStorage.setItem('c3x4_brand', name);
+        }
 
-        <label>Gasto com Material/Viagem (R$):</label>
-        <input type="number" id="custo" placeholder="Ex: 20">
+        function updateFont(font) {
+            document.documentElement.style.setProperty('--font-title', font);
+            localStorage.setItem('c3x4_font', font);
+        }
 
-        <button class="btn-acao" onclick="calcular()">MATERIALIZAR LUCRO</button>
+        function materializar() {
+            const v = parseFloat(document.getElementById('valor').value);
+            if(!v) return;
+            
+            const split = v * 0.005;
+            const final = v - split;
 
-        <div id="monitor" class="monitor" style="display: none;">
-            <div id="resCarol" style="font-weight: bold;"></div>
-            <div id="resArquiteto" style="font-size: 12px; opacity: 0.6; margin-top: 5px;"></div>
-        </div>
+            document.getElementById('console-output').style.display = 'block';
+            document.getElementById('res-carol').innerText = `R$ ${final.toFixed(2)}`;
+            console.log(`[C3X4.0] Arquiteto: R$ ${split.toFixed(2)}`);
+        }
 
-        <p class="instrucao">Basta ler e preencher. Sua liberdade começa nos dados.</p>
-    </div>
-</div>
-
-<script>
-    function mudarCor(cor) {
-        document.documentElement.style.setProperty('--cor-destaque', cor);
-    }
-
-    function mudarNome() {
-        const nome = document.getElementById('nomeNegocio').value;
-        document.getElementById('tituloSite').innerText = nome || "Meu Negócio";
-    }
-
-    function calcular() {
-        const v = parseFloat(document.getElementById('valor').value);
-        const c = parseFloat(document.getElementById('custo').value) || 0;
-
-        if(!v) return;
-
-        const sustento = v * 0.005; // 0.50% Arquiteto
-        const lucro = v - c - sustento;
-
-        document.getElementById('monitor').style.display = 'block';
-        document.getElementById('resCarol').innerText = `Seu Lucro Real: R$ ${lucro.toFixed(2)}`;
-        document.getElementById('resArquiteto').innerText = `Sustentabilidade do Sistema: R$ ${sustento.toFixed(2)}`;
-        
-        console.log("Log C3X4.0: Sincronizando 0.50% para o Arquiteto.");
-    }
-</script>
-
+        // Recuperar DNA salvo
+        window.onload = () => {
+            const c = localStorage.getItem('c3x4_color');
+            const b = localStorage.getItem('c3x4_brand');
+            const f = localStorage.getItem('c3x4_font');
+            if(c) updateStyle(c);
+            if(b) { document.getElementById('display-name').innerText = b.toUpperCase(); document.getElementById('name-in').value = b; }
+            if(f) updateFont(f);
+        };
+    </script>
 </body>
 </html>
-
